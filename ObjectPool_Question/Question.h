@@ -17,6 +17,7 @@
 #include <vector>
 #include <map>
 #include <stack>
+
 using namespace std;
 
 // A description of how to create an object, like a prototype
@@ -27,6 +28,16 @@ struct ObjectDescription
 		m_Name(name)
 	{
 
+	}
+
+	bool operator==(const ObjectDescription& objDes) const 
+	{
+		return m_ID == objDes.m_ID && m_Name == objDes.m_Name;
+	}
+
+	bool operator<(const ObjectDescription& objDes) const 
+	{
+		return m_ID < objDes.m_ID;
 	}
 
 	// Unique id for an object type
@@ -55,7 +66,7 @@ static Object* CreateObjectFromDescription(const ObjectDescription& description)
 {
 	Object* ret = new Object(description.m_ID);
 	ret->m_Name = description.m_Name;
-	ret->m_isActive = true;
+	ret->m_isActive = false;
 	return ret;
 }
 
@@ -68,7 +79,7 @@ static void DestroyObject(Object* object)
 template<typename PoolType, typename Description>
 class IPool
 {
-public:	
+public:
 	// Fill the pool with a number of inactive objects of the given type
 	virtual void PreWarmObject(const Description& description, const unsigned int amount) = 0;
 	

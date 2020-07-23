@@ -1,0 +1,81 @@
+We will now Prewarm the pools
+
+ID: (0) "Exceptionally Green Diode"
+The size is: 0
+We will now prewarm the pool with 10 objects
+The size is: 10
+
+ID: (1) "Dragon's pet 24-cell"
+The size is: 0
+We will now prewarm the pool with 10 objects
+The size is: 10
+
+ID: (2) "Event Horizon of Slime"
+The size is: 0
+We will now prewarm the pool with 10 objects
+The size is: 10
+
+
+We will now access an object and return it to the pool
+
+ID: (0) "Exceptionally Green Diode"
+The size is: 10
+We have retrieved from the pool an object with
+name: "Exceptionally Green Diode"
+ID: 0
+The size is: 9
+Returning Object to pool
+The size is: 10
+
+ID: (1) "Dragon's pet 24-cell"
+The size is: 10
+We have retrieved from the pool an object with
+name: "Dragon's pet 24-cell"
+ID: 1
+The size is: 9
+Returning Object to pool
+The size is: 10
+
+ID: (2) "Event Horizon of Slime"
+The size is: 10
+We have retrieved from the pool an object with
+name: "Event Horizon of Slime"
+ID: 2
+The size is: 9
+Returning Object to pool
+The size is: 10
+
+
+We will now access more object than the pool contains and return them all
+
+ID: (0) "Exceptionally Green Diode"
+We will now retreive 12 objects from the pool
+The size is: 10
+The size is: 0
+Returning Objects to pool
+Attempted to add null object to pool.  Suggestion: Increase amount pram on PreWarmObject
+Attempted to add null object to pool.  Suggestion: Increase amount pram on PreWarmObject
+The size is: 10
+
+ID: (1) "Dragon's pet 24-cell"
+We will now retreive 12 objects from the pool
+The size is: 10
+The size is: 0
+Returning Objects to pool
+Attempted to add null object to pool.  Suggestion: Increase amount pram on PreWarmObject
+Attempted to add null object to pool.  Suggestion: Increase amount pram on PreWarmObject
+The size is: 10
+
+ID: (2) "Event Horizon of Slime"
+We will now retreive 12 objects from the pool
+The size is: 10
+The size is: 0
+Returning Objects to pool
+Attempted to add null object to pool.  Suggestion: Increase amount pram on PreWarmObject
+Attempted to add null object to pool.  Suggestion: Increase amount pram on PreWarmObject
+The size is: 10
+
+Excellent!!! We made it and we didn't crash or nothin'!!! Thats great!!! GOOD JOB
+C:\Users\Chris Kreager\source\repos\Archiact\ArchiactChallenge\Debug\ObjectPool_Question.exe (process 27596) exited with code 0.
+To automatically close the console when debugging stops, enable Tools->Options->Debugging->Automatically close the console when debugging stops.
+Press any key to close this window . . .

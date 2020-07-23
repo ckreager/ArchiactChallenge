@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <map>
 
 #include "Question.h"
 
@@ -12,7 +14,9 @@ public:
 	virtual unsigned int GetPoolObjectCount(const ObjectDescription& description);
 	virtual Object* GetObject(const ObjectDescription& description);
 	virtual void ReturnObject(Object* Object);
-protected:
+private:
+	// Created pool per Object Description, just in case they are of different sizes.  This would help prevent memory fragmentation.
+	std::map <const ObjectDescription, vector<Object*> > pools_;
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -20,28 +24,62 @@ protected:
 
 void ObjectPool::PreWarmObject(const ObjectDescription& description, const unsigned int amount)
 {
-	// TODO:
+	// TODO: Add MAX_POOL_LIMIT and check amount does not exceed
+	if (pools_.find(description) != pools_.end())
+	{
+		// TODO: Handle overwritting existing pools
+		std::cerr << "Pool already exists with ObjectDescription ID: (" << description.m_ID << ") " << description.m_Name << " Suggestion: Check for duplicate ObjectDescriptions" << '\n';
+	}
+
+	std::vector<Object*> objects(amount, CreateObjectFromDescription(description));
+	pools_[description] = objects;
+
 }
 
 unsigned int ObjectPool::GetPoolObjectCount(const ObjectDescription& description)
 {
-	// TODO:
+	// Check to see if pool exists first
+	if (pools_.find(description) == pools_.end())
+		return 0;
+
+	try {
+		return static_cast<int>(pools_.at(description).size());
+	}
+	catch (const std::out_of_range& oor) {
+		// TODO: Remove out_of_range catch not that we are using map.find before map.at
+		//std::cerr << "Out of Range error: " << oor.what() << '\n';
+	}
 	return 0;
 }
 
 Object* ObjectPool::GetObject(const ObjectDescription& description)
 {
-	// TODO:
-	return nullptr;
+	if (pools_.find(description) == pools_.end())
+		throw "Called GetObject on an unknown ObjectDescription pool.  Suggestion: Call PreWarmObject first!";
+	if (pools_.at(description).empty())
+		return nullptr;
+	Object* pObject = pools_.at(description).back();
+	pools_.at(description).pop_back();
+	pObject->m_isActive = true;
+	return pObject;
 }
 
 void ObjectPool::ReturnObject(Object* obj)
 {
-	// TODO:
+	// TODO: Check if at capacity first
+	if (obj == nullptr)
+	{
+		//throw "Attempted to return a null object";
+		std::cerr << "Attempted to add null object to pool.  Suggestion: Increase amount pram on PreWarmObject" << '\n';
+		return;
+	}
+	obj->m_isActive = false;
+	pools_.at(ObjectDescription(obj->m_ID, obj->m_Name)).push_back(obj);
 }
 
 // Some sample Descriptions and data
 const int MaxDescrtiptions = 3;
+// TODO: Should we consider no duplicates, if so then we could used ID as key in map
 const ObjectDescription ObjDescriptions[] =
 {
 	ObjectDescription(0, "\"Exceptionally Green Diode\""),
